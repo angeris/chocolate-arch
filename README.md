@@ -143,7 +143,7 @@ Right-shifts the contents of `rs` by `rt` and stores the result in `res`.
 ## Load/Store Operations
 Load/store operations have TYPE `instr[7:6] == 0b10`.
 
-There are 4 possible lload/store (LS) operations: a special LS (which includes loading the next byte [at PC+1] and popping/pushing from the stack), an LS register instruction, and a load 2-bit, sign-extended immediate (for loading simple constants like 0, -1, and 1).
+There are 4 possible lload/store (LS) operations: a special LS (which includes loading the next byte [at PC+1] and popping/pushing from the stack and moving values from `res` to other registers), an LS register instruction, and a load 2-bit, sign-extended immediate (for loading simple constants like 0, -1, and 1).
 
 ### LS Special
 The load/store special instruction is an instruction that contains 3 different possible behaviours. The behaviour is given by bits `0bvv`.
