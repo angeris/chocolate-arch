@@ -14,7 +14,7 @@ r2: 0b10
 res: 0b11
 ```
 
-In Chocolate, the PC (Program Counter) register is not an explicitly accessible register and its value can only be manipulated by the use of branch instructions.
+In Chocolate, the `pc` (Program Counter) and `sp` (Stack pointer) registers are not explicitly accessible and their value can only be manipulated by the use of branch or load/store instructions, respectively.
 
 # Instruction Set
 ## Instruction layout
@@ -41,7 +41,7 @@ for most arithmetic and bitwise instructions. Throughout isntructions, `rs` will
 for a general AND instruction.
 
 ## Bit-wise operations
-Bit-wise operations have `TYPE` `instr[7:6] == 0b00`.
+Bit-wise operations have TYPE `instr[7:6] == 0b00`.
 
 There are 4 kinds of bitwise operations: NOP, AND, OR, and NOT, each of which is applied to two (or one/none, in the case of NOT/NOP respectively) register and the result is placed in the `res` register.
 
@@ -92,7 +92,7 @@ Takes the bitwise NOT of `rt` and stores the result in `rs`.
 
 
 ## Arithmetic operations
-Bit-wise operations have `TYPE` `instr[7:6] == 0b01`.
+Bit-wise operations have TYPE `instr[7:6] == 0b01`.
 
 There are 4 kinds of bitwise operations: ADD, SUB (subtract), SL (shift left), and SR (shift right), each of which is applied to two registers and the result is placed in the `res` register.
 
@@ -139,3 +139,112 @@ Right-shifts the contents of `rs` by `rt` and stores the result in `res`.
 *Notes:*
 
 > Note the order. This is `res <- rs >> rt`.
+
+## Load/Store Operations
+Load/store operations have TYPE `instr[7:6] == 0b10`.
+
+There are 4 possible lload/store (LS) operations: a special LS (which includes loading the next byte [at PC+1] and popping/pushing from the stack), an LS register instruction, and a load 2-bit, sign-extended immediate (for loading simple constants like 0, -1, and 1).
+
+### LS Special
+The load/store special instruction is an instruction that contains 3 different possible behaviours. The behaviour is given by bits `0bvv`.
+
+*Instruction format:*
+```
+0b10ssvv00
+```
+
+When `0bvv==0b00` the processor will load the next word (found at PC+1) onto register `rs` and skip PC to PC+2. This is useful for loading longer immediates into the registers. This is refered to, throughout, as a Load Next.
+
+When `0bvv==0b01` the processor will move the contents of register `res` into register `rs`.
+
+When `0bvv==b1y`, the processor will pop (if `0by==0b0`) or push (if `0by==0b1`) from the stack and increment/decrement the stack pointer accordingly. If the stack pointer is already at the highest memory address, this will place a `0xff` into the register in question.
+
+*Notes:*
+
+> This is a relatively special instruction since it is the only other non-branching instruction that can also control the PC. I'm sure it's going to be quite interesting to debug.
+
+### Store Reg
+The store reg instruction stores whatever is in `rs` into `{PC[15:8], rt[7:0]}`. It is therefore not a relative store.
+
+*Instruction format:*
+```
+0b10sstt01
+```
+
+*Notes:*
+
+> For this iteration, I'm unsure whether to just change this to storing `res` into `{rs, rt}` which would allow arbitrary stores, but would certainly make it more complicated.
+
+### Load Reg
+The load reg instruction loads whatever is in `{PC[15:8], rt[7:0]}` into `rs`.
+
+*Instruction format:*
+```
+0b10sstt10
+```
+
+*Notes:*
+
+> This has a similar note to the previous. Additionally, it would be interesting to use something of the like to pass longer arguments. I will write an example specifying this.
+
+### Load Immediate
+The load immediate instruction loads a sign-extended version of whatever is in the `0bii` part of the section.
+
+*Instruction format:*
+```
+0b10ssii11
+```
+
+*Notes:*
+
+> I made this instruction since I didn't want every load for simple constants like 0, 1, or -1 to have to take a load next and its corresponding byte (therefore taking *two* operations and being a pain to write).
+
+## Branch operations
+Branch operations have TYPE `instr[7:6] == 0b11`.
+
+There are 4 possible branching operations which can be split into two types: a relative branch and an absolute branch. Note that all are conditional! In general, for absolute branches it is possible to use the concatenation of any two registers in order to branch to the given address (any 16-bit number).
+
+### Relative branch on zero
+The relative branch on zero instruction checks if a register is equal to zero and branches to `PC+rs` if so (where `rs` is sign-extended).
+
+*Instruction format:*
+```
+0b11sstt00
+```
+
+*Notes:*
+> None.
+
+### Relative branch on not equal to zero
+This relative branch instruction checks if a register `rs` not equal to zero and branches to `PC+rt` if so (where `rt` is sign-extended).
+
+*Instruction format:*
+```
+0b11sstt01
+```
+
+*Notes:*
+> None.
+
+### Absolute branch on zero
+The relative branch on zero instruction checks if register `res` is equal to zero and branches to `{rs, rt}` if so.
+
+*Instruction format:*
+```
+0b11sstt10
+```
+
+*Notes:*
+> None.
+
+### Absolute branch on not equal to zero
+The relative branch on zero instruction checks if register `res` is not equal to zero and branches to `{rs, rt}` if so.
+
+*Instruction format:*
+```
+0b11sstt11
+```
+
+*Notes:*
+> None.
+
