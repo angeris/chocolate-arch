@@ -131,3 +131,11 @@ Left-shifts the contents of `rs` by `rt` and stores the result in `res`.
 
 ### SR
 Right-shifts the contents of `rs` by `rt` and stores the result in `res`.
+
+*Instruction format:*
+```
+0b01sstt11
+```
+*Notes:*
+
+> Note the order. This is `res <- rs >> rt`.
