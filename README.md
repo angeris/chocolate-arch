@@ -5,6 +5,32 @@ Chocolate is an 8-bit, single-cycle, toy architecture which fits entirely on an 
 
 [NOTES for how to run and such should be put here]
 
+# Table of Contents
+* [Register layout](#register-layout)
+* [Instruction Set](#instruction-set)
+    * [Instruction layout](#instruction-layout)
+    * [Bit-wise operations](#bit-wise-operations)
+        * [NOP](#nop)
+        * [AND](#and)
+        * [OR](#or)
+        * [NOT](#not)
+    * [Arithmetic operations](#arithmetic-operations)
+        * [ADD](#add)
+        * [SUB](#sub)
+        * [SL](#sl)
+        * [SR](#sr)
+    * [Load/Store Operations](#loadstore-operations)
+        * [LS Special](#ls-special)
+        * [Store Reg](#store-reg)
+        * [Load Reg](#load-reg)
+        * [Load Immediate](#load-immediate)
+    * [Branch operations](#branch-operations)
+        * [Relative branch on zero](#relative-branch-on-zero)
+        * [Relative branch on not equal to zero](#relative-branch-on-not-equal-to-zero)
+        * [Absolute branch on zero](#absolute-branch-on-zero)
+        * [Absolute branch on not equal to zero](#absolute-branch-on-not-equal-to-zero)
+
+
 # Register layout
 There are four general-purpose registers in Chocolate which are refered to as `r0`, `r1`, `r2`, and `r3`. The last one also has a second shorthand as `res` since it is specifically designed to be the result register. The result of any arithmetic or bitwise operation is immediately put in this register. As expected, the registers have the following numbering
 ```
