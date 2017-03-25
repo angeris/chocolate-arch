@@ -157,7 +157,7 @@ When `0bvv==0b00` the processor will load the next word (found at PC+1) onto reg
 
 When `0bvv==0b01` the processor will move the contents of register `res` into register `rs`.
 
-When `0bvv==b1y`, the processor will pop (if `0by==0b0`) or push (if `0by==0b1`) from the stack and increment/decrement the stack pointer accordingly. If the stack pointer is already at the highest memory address, this will place a `0xff` into the register in question.
+When `0bvv==0b1y`, the processor will pop (if `0by==0b0`) or push (if `0by==0b1`) from the stack and increment/decrement the stack pointer accordingly. If the stack pointer is already at the highest memory address, this will place a `0xff` into the register in question.
 
 *Notes:*
 
