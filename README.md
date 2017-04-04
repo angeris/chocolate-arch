@@ -1,7 +1,5 @@
 # Chocolate-Arch
-Chocolate: a microarchitecture small enough to be implemented on a Lattice HX1K FPGA.
-
-Chocolate is an 8-bit, single-cycle, toy architecture which fits entirely on an ICEStick. It was implemented as a side project in order to improve my understanding of both digital architecture and Verilog (along with having a bit of fun). It can also be used as an accessible introduction to low-level systems and how they work.
+Chocolate is an 8-bit, single-cycle, toy architecture which fits entirely on an ICEStick (HX1K FPGA). It was implemented as a side project in order to improve my understanding of both digital architecture and Verilog (along with having a bit of fun). It can also be used as an accessible introduction to low-level systems and how they work.
 
 [NOTES for how to run and such should be put here]
 
