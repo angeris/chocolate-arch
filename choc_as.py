@@ -18,6 +18,12 @@ opcodes = []
 def plus(val):
     opcodes.append(val)
 
+# compile code
+def qcompile(file_name):
+    f =  open(file_name, 'wb')
+    byte_array = bytearray(opcodes)
+    f.write(byte_array)
+
 
 # general ops
 def arith(instr, a, b):
@@ -43,13 +49,13 @@ def special(instr, a):
 def nop():
     plus(0)
 
-def _and(a, b):
+def qand(a, b):
     plus(bitw('and', a, b))
 
-def _or(a, b):
+def qor(a, b):
     plus(bitw('or', a, b))
 
-def _not(a, b):
+def qnot(a, b):
     plus(bitw('not', a, b))
 
 
