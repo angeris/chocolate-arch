@@ -1,0 +1,1 @@
+`define BRANCH_OPS 2'b11
