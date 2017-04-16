@@ -25,9 +25,10 @@ pc_instr pc_reg (
 );
 
 wire is_write, is_short_imm;
-wire [7:0] rs_read;
-wire [7:0] rt_read;
-wire [7:0] reg_write;
+wire [1:0] rs_read;
+wire [1:0] rt_read;
+wire [1:0] reg_write;
+wire [2:0] alu_op;
 
 decoder dec (
     .instr(instr),
@@ -38,7 +39,33 @@ decoder dec (
     .reg_write(reg_write),
     .is_short_imm(is_short_imm),
 
-    .is_jump(is_jump)
+    .is_jump(is_jump),
+    
+    .is_load_next(is_load_next),
+    .alu_op(alu_op)
+);
+
+wire [7:0] rs_val;
+wire [7:0] rt_val;
+wire [7:0] write_val;
+
+regfile registers (
+    .clk(dbg_clk),
+
+    .rs(rs_read),
+    .rt(rt_read),
+
+    .rs_val(rs_val),
+    .rt_val(rt_val),
+
+    .is_write(is_write),
+    .reg_write(reg_write),
+    .write_val(write_val)
+);
+
+n_instr next_instruction (
+    .clk(dbg_clk),
+    .is_load_next(is_load_next)
 );
 
 // If the memory is an input, send the rom_write, otherwise set it to high impedance and read

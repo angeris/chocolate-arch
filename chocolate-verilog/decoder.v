@@ -1,8 +1,9 @@
 module decoder(
     input wire [7:0] instr,
+    input wire force_nop,
     
-    output wire [7:0] rs_read,
-    output wire [7:0] rt_read,
+    output wire [1:0] rs_read,
+    output wire [1:0] rt_read,
     output wire is_write,
     output wire [7:0] reg_write,
 

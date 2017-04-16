@@ -1,6 +1,6 @@
 PROJ_NAME = processor
 PCF_FILE = $(PROJ_NAME).pcf
-FILES = $(PROJ_NAME).v pc.v decoder.v
+FILES = $(PROJ_NAME).v pc.v decoder.v regfile.v next_instruction.v alu.v
 
 all: $(PROJ_NAME).bin
 
