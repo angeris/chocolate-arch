@@ -24,6 +24,11 @@ pc_instr pc_reg (
     .rw_mem(rw_mem),
 );
 
+// If the memory is an input, send the rom_write, otherwise set it to high impedance and read
+assign mem_io = rw_mem ? rom_write : 8'bz;
+assign rom_read = rw_mem ? 0 : mem_io;
+assign pin_led = pc[0];
+
 wire is_write, is_short_imm;
 wire [1:0] rs_read;
 wire [1:0] rt_read;
@@ -86,10 +91,5 @@ n_instr next_instruction (
     .force_nop(force_nop),
     .load_imm_next(is_imm_next)
 );
-
-// If the memory is an input, send the rom_write, otherwise set it to high impedance and read
-assign mem_io = rw_mem ? rom_write : 8'bz;
-assign rom_read = rw_mem ? 0 : mem_io;
-assign pin_led = pc[0];
 
 endmodule
