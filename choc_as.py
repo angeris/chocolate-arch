@@ -83,6 +83,9 @@ def ld(a, b):
 def li(a, b):
     plus(load_store('li', a, b))
 
+def word(addr):
+    plus(addr)
+
 
 # special ops
 def ln(a):
