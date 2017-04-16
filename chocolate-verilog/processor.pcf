@@ -1,0 +1,27 @@
+set_io pin_led  95
+
+#set_io hw_clk   21
+
+# output interface
+set_io dbg_clk   91
+#set_io val_out[0] 119
+#set_io val_out[1] 118
+#set_io val_out[2] 117
+#set_io val_out[3] 116
+#set_io val_out[4] 115
+#set_io val_out[5] 114
+#set_io val_out[6] 113
+#set_io val_out[7] 112
+
+# memory interface
+
+set_io mem_io[0] 44
+set_io mem_io[1] 45
+set_io mem_io[2] 47
+set_io mem_io[3] 48
+set_io mem_io[4] 56
+set_io mem_io[5] 60
+set_io mem_io[6] 61
+set_io mem_io[7] 62
+
+set_io rw_mem 87 #read or write from memory
