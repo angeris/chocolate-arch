@@ -14,7 +14,7 @@ time.sleep(3)
 def convert(num):
     if (num.startswith('0x')):
         return int(num, 16)
-    else
+    else:
         return int(num)
 
 def read(num_bytes, address):
@@ -26,7 +26,7 @@ def read(num_bytes, address):
     time.sleep(.01)
 
     for i in range(0, num_bytes):
-        print(ard.read())
+        print(hex(ord((ard.read()))))
         time.sleep(0.002)
 
 def write(file_name, address):
@@ -48,7 +48,7 @@ def clear():
 print("[rwc] [filename or size] [address]")
 print("q to quit")
 
-cmd = input("Command: ")
+cmd = raw_input("Command: ")
 while (cmd != 'q'):
     args = cmd.split()
     if (args[0] == 'r'):
@@ -58,10 +58,10 @@ while (cmd != 'q'):
     elif (args[0] == 'w'):
         file_name = args[1]
         addr = convert(args[2])
-        write(filename, addr)
-    elif (args[0] == 'c')
+        write(file_name, addr)
+    elif (args[0] == 'c'):
         clear()
 
-    cmd = input("Command: ")
+    cmd = raw_input("Command: ")
 
 ard.close()
