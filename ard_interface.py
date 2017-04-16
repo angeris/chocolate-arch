@@ -5,7 +5,7 @@ import sys
 import serial as ser
 import time
 
-ARD_NAME = '/dev/cu.wchusbserial1420'
+ARD_NAME = '/dev/cu.wchusbserial1410'
 BITRATE = 9600
 
 ard = ser.Serial(ARD_NAME, BITRATE, timeout=None)
@@ -61,6 +61,8 @@ while (cmd != 'q'):
         write(file_name, addr)
     elif (args[0] == 'c'):
         clear()
+    elif (args[0] == 'a'):
+        ard.write('a');
 
     cmd = raw_input("Command: ")
 

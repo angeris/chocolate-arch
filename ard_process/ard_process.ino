@@ -4,22 +4,30 @@ int hiloPin = 12;
 
 int dataPins[] = {2, 3, 4, 5, 6, 7, 8, 9};
 unsigned char data[256];
+
 void setup() {
   for(int i = 0; i<256; i++){
     data[i] = 0;
   }
+  data[0] = 0x80;
+  data[1] = 0x08;
+  data[2] = 0xc2;
+  data[8] = 0xd6;
   Serial.begin(9600);     // opens serial port, sets data rate to 9600 bps
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(hiloPin, INPUT);
+  pinMode(13, OUTPUT);
 }
 
 bool getHilo(){
   return digitalRead(hiloPin);
 }
+
+unsigned int output = 0;
+unsigned char addr = 0;
 void loop() {
-  
   if(getHilo()){
-    unsigned char addr = 0;
+    
     for(int i = 7; i>=0; i--){
       pinMode(dataPins[i], INPUT);
     }
@@ -27,8 +35,11 @@ void loop() {
     for(int i = 7; i>=0; i--){
       addr |= digitalRead(dataPins[i]) << i;
     }
+    Serial.println(addr);
+  }
+  else {
 
-    while(getHilo()){};
+    Serial.println("off");
 
     for(int i = 7; i>=0; i--){
       pinMode(dataPins[i], OUTPUT);
@@ -38,6 +49,7 @@ void loop() {
     for(int i = 7; i>=0; i--){
       digitalWrite(dataPins[i], val & (1 << i));
     }
+    addr = 0;
     
   }
   
@@ -85,6 +97,9 @@ void loop() {
         data[i] = 0;
       }
     }
-
+    if (incomingByte == 'a') {
+      digitalWrite(13, output);
+      output ^= 1;
+    }
   }
 }
