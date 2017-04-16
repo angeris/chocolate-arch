@@ -1,6 +1,6 @@
 module regfile(
     input wire clk,
-    
+
     input wire [1:0] rs,
     input wire [1:0] rt,
 
@@ -28,7 +28,6 @@ end
 always @(negedge clk) begin
     if(is_write)
         registers[reg_write] <= write_val;
-    end
 end
 
 endmodule

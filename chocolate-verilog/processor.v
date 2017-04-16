@@ -29,9 +29,11 @@ wire [1:0] rs_read;
 wire [1:0] rt_read;
 wire [1:0] reg_write;
 wire [2:0] alu_op;
+wire force_nop;
 
 decoder dec (
     .instr(instr),
+    .force_nop(force_nop),
 
     .rs_read(rs_read),
     .rt_read(rt_read),
@@ -45,9 +47,24 @@ decoder dec (
     .alu_op(alu_op)
 );
 
+
+wire [7:0] alu_output;
+
+alu m_alu(
+    .alu_op(alu_op),
+    .alu_x(rs_val),
+    .alu_y(rt_val),
+
+    .alu_output(alu_output)
+);
+
 wire [7:0] rs_val;
 wire [7:0] rt_val;
 wire [7:0] write_val;
+
+wire is_imm_next;
+
+assign write_val = is_imm_next ? instr : alu_output;
 
 regfile registers (
     .clk(dbg_clk),
@@ -65,7 +82,9 @@ regfile registers (
 
 n_instr next_instruction (
     .clk(dbg_clk),
-    .is_load_next(is_load_next)
+    .is_load_next(is_load_next),
+    .force_nop(force_nop),
+    .load_imm_next(is_imm_next)
 );
 
 // If the memory is an input, send the rom_write, otherwise set it to high impedance and read

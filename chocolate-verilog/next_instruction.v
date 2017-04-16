@@ -1,13 +1,14 @@
 module n_instr (
     input wire clk,
-
     input wire is_load_next,
-    input wire [7:0] instr,
 
-    output wire force_nop
+    output wire force_nop,
+    output wire load_imm_next
 );
 
 reg is_next_load, is_load_after;
+
+assign load_imm_next = is_load_after;
 
 always @(posedge clk) begin
     is_next_load <= is_load_next;
