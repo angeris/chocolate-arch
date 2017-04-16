@@ -17,6 +17,6 @@ module decoder(
 assign is_jump = instr[7:6] == 2'b11;
 assign is_load_next = instr == 8'h80;
 
-
+assign alu_op = 0;
 
 endmodule

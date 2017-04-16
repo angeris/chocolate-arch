@@ -6,6 +6,6 @@ module alu (
     output wire [7:0] alu_output
 );
 
-
+assign alu_output = alu_x;
 
 endmodule
