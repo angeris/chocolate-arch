@@ -58,7 +58,7 @@ where `OP` is a special 2-bit number representing either the type of operation b
 ```
 res = (rs) * (rt)
 ```
-for most arithmetic and bitwise instructions. Throughout isntructions, `rs` will be given as `0bss`, `rt` will be given as `0btt`, and "don't matter" bits will be given as `0bxx` such that an example instruction will have the form
+for most arithmetic and bitwise instructions. Throughout instructions, `rs` will be given as `0bss`, `rt` will be given as `0btt`, and "don't matter" bits will be given as `0bxx` such that an example instruction will have the form
 ```
 0b00sstt01
 ```
